@@ -1,6 +1,7 @@
 package com.todo.project.controller;
 
 import com.todo.project.model.Todo;
+import com.todo.project.payload.TodoPatchDTO;
 import com.todo.project.service.TodoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class TodoController {
     }
 
     @PatchMapping("/todos/{todoId}")
-    public ResponseEntity<String> updateTodo(@PathVariable("todoId") Long todoId, @RequestBody Todo todo) {
-        todoService.updateTodoById(todoId,todo);
+    public ResponseEntity<String> updateTodo(@PathVariable("todoId") Long todoId, @Valid @RequestBody TodoPatchDTO todoPatchDTO) {
+        todoService.updateTodoById(todoId,todoPatchDTO);
 
         return new ResponseEntity<>("Todo with Id: " + todoId + " Updated successfully !!!",HttpStatus.OK);
     }
@@ -39,6 +40,6 @@ public class TodoController {
     @DeleteMapping("/todos/{todoId}")
     public ResponseEntity<String > deleteTodo(@PathVariable("todoId") Long todoId) {
         todoService.deleteTodoById(todoId);
-        return new ResponseEntity<>("Todo with Id: " + todoId + "deleted successfully !!!",HttpStatus.OK);
+        return new ResponseEntity<>("Todo with Id: " + todoId + " deleted successfully !!!",HttpStatus.OK);
     }
 }
